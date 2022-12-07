@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<interviewApp:BasePage x:TypeArguments="viewModels:MainViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:interviewApp="clr-namespace:InterviewApp;assembly=InterviewApp"
+                       xmlns:viewModels="clr-namespace:InterviewApp.Core.ViewModels;assembly=InterviewApp.Core"
+                       xmlns:converters="clr-namespace:InterviewApp.Converters;assembly=InterviewApp"
+                       BindingContext="{Binding MainViewModel, Source={StaticResource  ViewModelLocator}}"
+                       x:Class="InterviewApp.MainPage">
+    <interviewApp:BasePage.Resources>
+        <ResourceDictionary>
+            <converters:CurrencyScaleConverter x:Key="CurrencyScaleConverter" />
+        </ResourceDictionary>
+    </interviewApp:BasePage.Resources>
+    <StackLayout>
+        <CollectionView ItemsSource="{Binding Currencies }">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,auto" Margin="10">
+                        <StackLayout Margin="10">
+                            <Label Text="{Binding CharCode}" FontAttributes="Bold" />
+                            <Label Text="{Binding ., Converter={StaticResource CurrencyScaleConverter}}" />
+                        </StackLayout>
+                        <Label Grid.Column="1" Margin="0,0,20,0" Text="{Binding Rate}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</interviewApp:BasePage>
