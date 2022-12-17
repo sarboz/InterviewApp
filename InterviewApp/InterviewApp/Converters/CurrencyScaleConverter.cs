@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using InterviewApp.Core.Models;
 using InterviewApp.Data.Entities;
 using Xamarin.Forms;
 
@@ -9,9 +10,7 @@ namespace InterviewApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is not Currency currency)
-                return string.Empty;
-            return $"{currency.Scale} {currency.Name}";
+            return value is not CurrencyModel currency ? string.Empty : $"{currency.Scale} {currency.Name}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

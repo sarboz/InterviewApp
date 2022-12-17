@@ -1,11 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:services="clr-namespace:InterviewApp.Core.Services;assembly=InterviewApp.Core"
              x:Class="InterviewApp.App">
     <Application.Resources>
-<ResourceDictionary>
-    <services:ViewModelLocator x:Key="ViewModelLocator" />
-</ResourceDictionary>
+        <ResourceDictionary>
+            <x:String x:Key="MaterialFontFamily">materialIcons</x:String>
+            <services:ViewModelLocator x:Key="ViewModelLocator" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

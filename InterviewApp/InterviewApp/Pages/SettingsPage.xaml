@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="InterviewApp.SettingsPage">
+<interviewApp:BasePage x:TypeArguments="viewModels:SettingsViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       BindingContext="{Binding SettingsViewModel, Source={StaticResource  ViewModelLocator}}"
+                       xmlns:interviewApp="clr-namespace:InterviewApp;assembly=InterviewApp"
+                       x:Name="This"
+                       Title="Settings"
+                       xmlns:viewModels="clr-namespace:InterviewApp.Core.ViewModels;assembly=InterviewApp.Core"
+                       xmlns:behavior="clr-namespace:InterviewApp.Behavior;assembly=InterviewApp"
+                       x:Class="InterviewApp.SettingsPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+            <CollectionView
+                ItemsSource="{Binding CurrenciesSettings }">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,auto,auto">
+                            <Label Text="{Binding CurrencyCharCode}" FontAttributes="Bold" />
+                            <Switch Grid.Column="1" IsToggled="{Binding IsHide}">
+                                <Switch.Behaviors>
+                                    <behavior:EventToCommandBehavior EventName="Toggled" CommandParameter="{Binding .}"
+                                                                     Command="{Binding Source={x:Reference This}, Path=BindingContext.SelectedChangedCommand}">
+                                    </behavior:EventToCommandBehavior>
+                                </Switch.Behaviors>
+                            </Switch>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>
+</interviewApp:BasePage>

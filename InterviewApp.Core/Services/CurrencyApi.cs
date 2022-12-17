@@ -10,17 +10,21 @@ namespace InterviewApp.Core.Services;
 public class CurrencyApi
 {
     private readonly HttpClient _httpClient;
-    private const string BaseAddress = "https://nbrb.by/";
+    private const string BaseAddress = "https://www.nbrb.by/Services/XmlExRates.aspx";
 
     public CurrencyApi()
     {
-        _httpClient = new HttpClient { BaseAddress = new Uri(BaseAddress) };
+        _httpClient = new HttpClient();
     }
 
     public async Task<List<CurrencyDto>> GetByDate(DateTime dateTime)
     {
         var date = dateTime.ToString("d");
-        var httpResponseMessage = await _httpClient.GetAsync($"/Services/XmlExRates.aspx?ondate={date}");
+        var uriBuilder = new UriBuilder(BaseAddress)
+        {
+            Query = $"ondate={date}"
+        }.ToString();
+        var httpResponseMessage = await _httpClient.GetAsync(uriBuilder);
         httpResponseMessage.EnsureSuccessStatusCode();
         var readAsStringAsync = await httpResponseMessage.Content.ReadAsStreamAsync();
         var xmlSerializer = new XmlSerializer(typeof(DailyRateDto));

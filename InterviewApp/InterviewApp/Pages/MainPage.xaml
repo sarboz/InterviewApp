@@ -2,9 +2,11 @@
 
 <interviewApp:BasePage x:TypeArguments="viewModels:MainViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Title="Currencies"
                        xmlns:interviewApp="clr-namespace:InterviewApp;assembly=InterviewApp"
                        xmlns:viewModels="clr-namespace:InterviewApp.Core.ViewModels;assembly=InterviewApp.Core"
                        xmlns:converters="clr-namespace:InterviewApp.Converters;assembly=InterviewApp"
+                       xmlns:resources="clr-namespace:InterviewApp.Resources;assembly=InterviewApp"
                        BindingContext="{Binding MainViewModel, Source={StaticResource  ViewModelLocator}}"
                        x:Class="InterviewApp.MainPage">
     <interviewApp:BasePage.Resources>
@@ -12,16 +14,27 @@
             <converters:CurrencyScaleConverter x:Key="CurrencyScaleConverter" />
         </ResourceDictionary>
     </interviewApp:BasePage.Resources>
+    <interviewApp:BasePage.ToolbarItems>
+        <ToolbarItem Text="Settings" Command="{Binding NavigateCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    Color="Black"
+                    FontFamily="{StaticResource MaterialFontFamily}"
+                    Glyph="{x:Static resources:MaterialIcons.Settings}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </interviewApp:BasePage.ToolbarItems>
     <StackLayout>
         <CollectionView ItemsSource="{Binding Currencies }">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="*,auto" Margin="10">
+                    <Grid ColumnDefinitions="*,auto,auto" Margin="10">
                         <StackLayout Margin="10">
                             <Label Text="{Binding CharCode}" FontAttributes="Bold" />
                             <Label Text="{Binding ., Converter={StaticResource CurrencyScaleConverter}}" />
                         </StackLayout>
-                        <Label Grid.Column="1" Margin="0,0,20,0" Text="{Binding Rate}" />
+                        <Label Grid.Column="1" Margin="0,0,20,0" Text="{Binding CurrentRate}" />
+                        <Label Grid.Column="2" Margin="0,0,20,0" Text="{Binding OlderRate}" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

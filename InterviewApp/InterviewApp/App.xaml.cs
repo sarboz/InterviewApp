@@ -1,14 +1,9 @@
-﻿using System;
+﻿using InterviewApp.Core.Abstractions;
 using InterviewApp.Core.Services;
 using InterviewApp.Core.ViewModels;
 using InterviewApp.Data;
-using InterviewApp.Data.Abstractions;
 using InterviewApp.Data.Repositories;
-using Microsoft.EntityFrameworkCore;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
 namespace InterviewApp
 {
@@ -17,16 +12,20 @@ namespace InterviewApp
         public App()
         {
             InitializeComponent();
-            IApplicationContext dbContext = new Context(new DatabasePathProvider());
-            var dailyRateRepository = new DailyRateRepository(dbContext);
+            var dbContext = new Context(new DatabasePathProvider());
+            var dailyRateRepository = new CurrencyRepository(dbContext);
+
             DependencyResolver.Instance.Register(new CurrencyApi());
             DependencyResolver.Instance.Register(dbContext);
             DependencyResolver.Instance.Register(dailyRateRepository);
             DependencyResolver.Instance.Register(new CurrencyService());
             DependencyResolver.Instance.Register(new MainViewModel());
+            DependencyResolver.Instance.Register(new SettingsViewModel());
+            INavigationService navigationService = new NavigationService();
+            DependencyResolver.Instance.Register(navigationService);
 
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

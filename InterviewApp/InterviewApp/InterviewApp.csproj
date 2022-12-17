@@ -32,4 +32,9 @@
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\materialdesignicons_font.ttf" />
+      <EmbeddedResource Include="Resources\materialdesignicons_font.ttf" />
+    </ItemGroup>
 </Project>

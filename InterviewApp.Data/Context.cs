@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DamatMobile.Core.Abstractions;
-using InterviewApp.Data.Abstractions;
+using InterviewApp.Data.Dtos;
 using InterviewApp.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InterviewApp.Data;
 
-public class Context : DbContext, IApplicationContext
+public class Context : DbContext
 {
     private readonly IDatabasePathProvider _pathProvider;
 
@@ -17,6 +16,7 @@ public class Context : DbContext, IApplicationContext
     {
         _pathProvider = pathProvider;
         base.Database.EnsureCreated();
+        base.ChangeTracker.AutoDetectChangesEnabled = false;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,6 +30,7 @@ public class Context : DbContext, IApplicationContext
         modelBuilder.Entity<Currency>().Property(currency => currency.IsHide).HasDefaultValue(false);
         modelBuilder.Entity<DailyRate>().HasKey(rate => rate.Id);
         modelBuilder.Entity<Currency>().HasKey(currency => currency.Id);
+        modelBuilder.Entity<SettingsEntity>().HasKey(currency => currency.Id);
 
         modelBuilder.Entity<DailyRate>()
             .HasMany(rate => rate.Currency)
@@ -42,12 +43,7 @@ public class Context : DbContext, IApplicationContext
 
     public DbSet<Currency> Currencies => Set<Currency>();
     public DbSet<DailyRate> DailyRates => Set<DailyRate>();
-
-    public new void Add(object entity) => base.Add(entity);
-
-    public void Update(object entity) => base.Update(entity);
-
-    public void Remove(object entity) => base.Remove(entity);
+    public DbSet<SettingsEntity> SettingsEntities => Set<SettingsEntity>();
 
     public async Task<int> SaveChangesAsync()
     {

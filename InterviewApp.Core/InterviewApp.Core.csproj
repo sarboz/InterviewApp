@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Abstractions" />
+      <ProjectReference Include="..\InterviewApp.Data\InterviewApp.Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\InterviewApp.Data\InterviewApp.Data.csproj" />
+      <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     </ItemGroup>
 
 </Project>

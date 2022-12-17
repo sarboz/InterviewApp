@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using InterviewApp.Core.Models;
 using InterviewApp.Data.Dtos;
 using InterviewApp.Data.Entities;
 
@@ -21,9 +22,24 @@ public static class MapperExtension
         {
             currencies.Add(new Currency()
             {
-                Name = dto.Name, Rate = dto.Rate, NumCode = dto.NumCode, Scale = dto.Scale,CharCode = dto.CharCode
+                Name = dto.Name, Rate = dto.Rate, NumCode = dto.NumCode, Scale = dto.Scale, CharCode = dto.CharCode
             });
         }
+
         return currencies;
+    }
+
+    public static Dictionary<string, CurrencyModel> MapCurrencyToCurrencyModel(this List<Currency> currency)
+    {
+        var currencyModels = new Dictionary<string, CurrencyModel>();
+        foreach (var dto in currency)
+        {
+            currencyModels.Add(dto.CharCode, new CurrencyModel()
+            {
+                Name = dto.Name, CurrentRate = dto.Rate, Scale = dto.Scale, CharCode = dto.CharCode
+            });
+        }
+
+        return currencyModels;
     }
 }
