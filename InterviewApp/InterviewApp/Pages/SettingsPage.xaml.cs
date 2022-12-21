@@ -1,6 +1,6 @@
 using Xamarin.Forms.Xaml;
 
-namespace InterviewApp
+namespace InterviewApp.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsPage

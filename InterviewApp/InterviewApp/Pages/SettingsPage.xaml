@@ -8,7 +8,7 @@
                        Title="Settings"
                        xmlns:viewModels="clr-namespace:InterviewApp.Core.ViewModels;assembly=InterviewApp.Core"
                        xmlns:behavior="clr-namespace:InterviewApp.Behavior;assembly=InterviewApp"
-                       x:Class="InterviewApp.SettingsPage">
+                       x:Class="InterviewApp.Pages.SettingsPage">
     <ContentPage.Content>
         <StackLayout>
             <CollectionView
